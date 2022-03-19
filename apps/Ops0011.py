@@ -81,7 +81,7 @@ def app():
                      x=x+1
        fig.update_layout(template="ggplot2",
                      height=704, width=704, 
-                     title_text=area,showlegend=False)
+                     title_text=area,showlegend=False,plot_bgcolor='white')
        fig.update_yaxes(range=[0, 50])
 
        ##################################################################

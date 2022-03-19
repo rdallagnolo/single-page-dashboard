@@ -53,7 +53,7 @@ def app():
                         ]
                     )
 
-    fig1.update_layout(template="ggplot2",
+    fig1.update_layout(template="ggplot2",plot_bgcolor='white',
         width=704,height=420,
         title="Loan Quality",
         xaxis_title="Staff Name",
@@ -79,7 +79,7 @@ def app():
                         ]
                     )
 
-    fig2.update_layout(template="ggplot2",
+    fig2.update_layout(template="ggplot2",plot_bgcolor='white',
         width=704,height=420,
         title="Renewal trend",
         xaxis_title="Staff Name",
@@ -108,11 +108,20 @@ def app():
                         ]
                     )
 
-    fig3.update_layout(template="ggplot2",
+    fig3.update_layout(template="ggplot2",plot_bgcolor='white',
         width=704,height=420,
         title="Recruitment",
         xaxis_title="Staff Name",
-        yaxis_title="Count")
+        yaxis_title="Count"
+        )
+    
+    fig3.update_layout(
+    title={
+        #'text': "Plot Title",
+        'y':1,
+        'x':0.5})#,
+        #'xanchor': 'center',
+        #'yanchor': 'top'})
 
     # legend position
     fig3.update_layout(legend=dict(
@@ -129,7 +138,7 @@ def app():
 
     fig4 = go.Figure(data=[go.Pie(labels=portfolio['Staff Name'], values=portfolio['$ Portfolio Outstanding'])])
 
-    fig4.update_layout(template="ggplot2",
+    fig4.update_layout(template="ggplot2",plot_bgcolor='white',
         width=704,height=630,
         title="$ Portfolio Outstanding"
     )

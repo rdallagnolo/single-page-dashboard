@@ -23,7 +23,7 @@ def app():
     # calendar 
     day=st.sidebar.date_input(
         label="Select the day",
-        value=datetime.date(2021,12,10))
+        value=datetime.date(2021,12,6))
     # dropdown
     branch = st.sidebar.selectbox(
         'Select the branch',
@@ -39,7 +39,7 @@ def app():
     ##################################################################
     # The dummy dataset
     ##################################################################
-    df = pd.read_csv("Ops001.csv",parse_dates=["Date"])
+    df = pd.read_csv("data/Ops001.csv",parse_dates=["Date"])
 
     # slicing the dataset to show only the selected day
     df =  df[(df['Date']==day) & (df['Branch Name']==branch)]
@@ -63,14 +63,7 @@ def app():
         width=840,height=420,
         title="Loan Quality",
         xaxis_title="Staff Name",
-        yaxis_title="Count"
-        #legend_title="Legend Title",
-        #font=dict(
-        #    family="Courier New, monospace",
-        #    size=18,
-        #    color="RebeccaPurple"
-        #)
-    )
+        yaxis_title="Count")
 
     # legend position
     fig1.update_layout(legend=dict(

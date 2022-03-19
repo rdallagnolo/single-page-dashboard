@@ -3,7 +3,7 @@ from multiapp import MultiApp
 from apps import home, Ops001, Ops0011, Ops0012, Ops004, Fin008
 from PIL import Image
 
-image = Image.open('grameen-logo.jpg')
+image = Image.open('images/grameen-logo.jpg')
 app = MultiApp()
 
 st.image(image)

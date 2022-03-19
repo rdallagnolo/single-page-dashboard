@@ -9,17 +9,14 @@ def app():
     ##################################################################
     # The dashboard
     ##################################################################
-    # wide layout
-    #st.set_page_config(layout="wide")
-
+    
     # add some css style to the page
     with open('style.css') as f:
             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
     # main header with report name
     st.markdown("<h2 style='text-align: center; color: #55D0CE '>Branch Daily Update</h2>", unsafe_allow_html=True)
-    #st.title("Branch Daily Updates")
-
+    
     ###########
     # side bar
     ###########

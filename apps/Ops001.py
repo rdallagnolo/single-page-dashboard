@@ -10,10 +10,6 @@ def app():
     # The dashboard
     ##################################################################
     
-    # add some css style to the page
-    #with open('style.css') as f:
-    #        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
     # main header with report name
     st.markdown("<h2 style='text-align: center; color: #55D0CE '>Branch Daily Update</h2>", unsafe_allow_html=True)
     
@@ -24,16 +20,14 @@ def app():
     day=st.sidebar.date_input(
         label="Select the day",
         value=datetime.date(2021,12,6))
+    day=day.strftime("%Y-%m-%d")                                              
+    day=str(day)
+    
     # dropdown
     branch = st.sidebar.selectbox(
         'Select the branch',
         ('Dallas', 'Memphis'))
-
-    # week day
-    wd = day.strftime('%A')
-    # converting the selected from datetime to string so it can be used to slice the dataset
-    day=day.strftime("%Y-%m-%d")                                              
-    day=str(day)                                                              
+                                                           
 
 
     ##################################################################
@@ -182,6 +176,3 @@ def app():
     st.plotly_chart(fig2)
     st.plotly_chart(fig3)
     st.plotly_chart(fig4)
-
-    #df2 = df.drop('Date',axis=1)
-    #st.table(df2)

@@ -10,15 +10,16 @@ def app():
        # The dashboard
        ##################################################################
 
-       # side bar - calendar
+       ###########
+       # side bar
+       ############ 
+       # calendar
        d=st.sidebar.date_input(label="Select the day",
                             value=datetime.date(2021,12,6))
-
-       wd = d.strftime('%A')
        d=d.strftime("%Y-%m-%d")                                              
        d=str(d)                                                              
 
-       # side bar - area 
+       # dropdown 
        area = st.sidebar.selectbox(
               "Select the Area",
               ('New York', 'Northeast', 'Central & Southeast','California','Texas','Elevate'))

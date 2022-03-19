@@ -66,22 +66,23 @@ def app():
        branches = list(df.columns[1:-1])
 
        fig = make_subplots(rows=plot_rows, cols=plot_cols,
-                    shared_xaxes=True,
-                    vertical_spacing=0.08,
-                    subplot_titles=(branches))
+                     shared_xaxes=True,
+                     vertical_spacing=0.08,
+                     subplot_titles=(branches))
        x = 1
        for i in range(1, plot_rows + 1):
               for j in range(1, plot_cols + 1):
                      fig.add_trace(go.Bar(x=df['metrics'],y=df[df.columns[x]].values,
-                                          name = df.columns[x],
-                                          ),
-                                   row=i,
-                                   col=j)
+                                   name = df.columns[x],
+                                   ),
+                            row=i,
+                            col=j)
 
                      x=x+1
-       fig.update_layout(template="plotly_white",
-                            height=630, width=840, 
-                            title_text=area,showlegend=False)
+       fig.update_layout(template="ggplot2",
+                     height=704, width=704, 
+                     title_text=area,showlegend=False)
+       fig.update_yaxes(range=[0, 50])
 
        ##################################################################
        # Grand Total Metrics

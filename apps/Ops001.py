@@ -53,8 +53,8 @@ def app():
                         ]
                     )
 
-    fig1.update_layout(template="plotly_white",
-        width=840,height=420,
+    fig1.update_layout(template="ggplot2",
+        width=704,height=420,
         title="Loan Quality",
         xaxis_title="Staff Name",
         yaxis_title="Count")
@@ -79,8 +79,8 @@ def app():
                         ]
                     )
 
-    fig2.update_layout(template="plotly_white",
-        width=840,height=420,
+    fig2.update_layout(template="ggplot2",
+        width=704,height=420,
         title="Renewal trend",
         xaxis_title="Staff Name",
         yaxis_title="Count")
@@ -108,8 +108,8 @@ def app():
                         ]
                     )
 
-    fig3.update_layout(template="plotly_white",
-        width=840,height=420,
+    fig3.update_layout(template="ggplot2",
+        width=704,height=420,
         title="Recruitment",
         xaxis_title="Staff Name",
         yaxis_title="Count")
@@ -129,8 +129,8 @@ def app():
 
     fig4 = go.Figure(data=[go.Pie(labels=portfolio['Staff Name'], values=portfolio['$ Portfolio Outstanding'])])
 
-    fig4.update_layout(template="plotly_white",
-        width=840,height=630,
+    fig4.update_layout(template="ggplot2",
+        width=704,height=630,
         title="$ Portfolio Outstanding"
     )
 

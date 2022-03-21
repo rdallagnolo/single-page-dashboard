@@ -168,6 +168,7 @@ def app():
     ## Ploting the graphs in the dashboard
     ##################################################################
 
+
     col1, col2, col3, col4, col5, col6 = st.columns(6)
     col1.metric(label='# of drops',value=n_of_drops)
     col2.metric(label='# Partials',value=n_of_partial)

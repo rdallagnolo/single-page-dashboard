@@ -82,6 +82,9 @@ def app():
        fig.update_layout(template="ggplot2",
                      height=704, width=704, 
                      title_text=area,showlegend=False,plot_bgcolor='white')
+       
+       fig.update_traces(marker=dict(color=['#9EE3CA','#9BD7F2','#AEAEE4','#855AAC','#92AFE7','#30CAC0','#327F5F']))
+
        fig.update_yaxes(range=[0, 50])
 
        ##################################################################

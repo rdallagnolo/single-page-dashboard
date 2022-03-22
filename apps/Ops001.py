@@ -47,9 +47,9 @@ def app():
     ##################################################################
     loan_quality = df.iloc[0:3:,0:6]
 
-    fig1 = go.Figure(data=[go.Bar(name = '# Drops',x = loan_quality['Staff Name'],y = loan_quality['# Drops']),
-                        go.Bar(name = '# Partials',x = loan_quality['Staff Name'],y = loan_quality['# Partials']),
-                        go.Bar(name = '# Irregular Borrower', x = loan_quality['Staff Name'],y = loan_quality['# Irregular Borrower'])
+    fig1 = go.Figure(data=[go.Bar(name = '# Drops',x = loan_quality['Staff Name'],y = loan_quality['# Drops'],marker_color='#9EE3CA'),
+                        go.Bar(name = '# Partials',x = loan_quality['Staff Name'],y = loan_quality['# Partials'],marker_color='#9BD7F2'),
+                        go.Bar(name = '# Irregular Borrower', x = loan_quality['Staff Name'],y = loan_quality['# Irregular Borrower'],marker_color='#AEAEE4')
                         ]
                     )
 
@@ -67,15 +67,14 @@ def app():
         xanchor="left",
         x=0))
 
-
     ##################################################################
     # Renewal trend graph
     ##################################################################
     renewal_trend = df.loc[0:2,['Date','Branch Name','Staff Name','# Paid Off Yesterday','# Today Disbursed','# Today Paid off']]
 
-    fig2 = go.Figure(data=[go.Bar(name = '# Paid Off Yesterday',x = renewal_trend['Staff Name'],y = renewal_trend['# Paid Off Yesterday']),
-                        go.Bar(name = '# Today Disbursed',x = renewal_trend['Staff Name'],y = renewal_trend['# Today Disbursed']),
-                        go.Bar(name = '# Today Paid off', x = renewal_trend['Staff Name'],y = renewal_trend['# Today Paid off'])
+    fig2 = go.Figure(data=[go.Bar(name = '# Paid Off Yesterday',x = renewal_trend['Staff Name'],y = renewal_trend['# Paid Off Yesterday'],marker_color='#855AAC'),
+                        go.Bar(name = '# Today Disbursed',x = renewal_trend['Staff Name'],y = renewal_trend['# Today Disbursed'],marker_color='#92AFE7'),
+                        go.Bar(name = '# Today Paid off', x = renewal_trend['Staff Name'],y = renewal_trend['# Today Paid off'],marker_color='#30CAC0')
                         ]
                     )
 
@@ -100,11 +99,11 @@ def app():
     recruitment = df.loc[0:2,['Date','Branch Name','Staff Name','# Virtual New Borrower (Disbursed)','# Returning Borrowers (Disbursed)','# CGT Trainings',
                         '# Recognized New Members','# Recognized Return Members']]
 
-    fig3 = go.Figure(data=[go.Bar(name = '# Virtual New Borrower (Disbursed)',x = recruitment['Staff Name'],y = recruitment['# Virtual New Borrower (Disbursed)']),
-                        go.Bar(name = '# Returning Borrowers (Disbursed)',x = recruitment['Staff Name'],y = recruitment['# Returning Borrowers (Disbursed)']),
-                        go.Bar(name = '# CGT Trainings', x = recruitment['Staff Name'],y = recruitment['# CGT Trainings']),
-                        go.Bar(name = '# Recognized New Members', x = recruitment['Staff Name'],y = recruitment['# Recognized New Members']),
-                        go.Bar(name = '# Recognized Return Members', x = recruitment['Staff Name'],y = recruitment['# Recognized Return Members'])
+    fig3 = go.Figure(data=[go.Bar(name = '# Virtual New Borrower (Disbursed)',x = recruitment['Staff Name'],y = recruitment['# Virtual New Borrower (Disbursed)'],marker_color='#327F5F'),
+                        go.Bar(name = '# Returning Borrowers (Disbursed)',x = recruitment['Staff Name'],y = recruitment['# Returning Borrowers (Disbursed)'],marker_color='#3589A7'),
+                        go.Bar(name = '# CGT Trainings', x = recruitment['Staff Name'],y = recruitment['# CGT Trainings'],marker_color='#23738E'),
+                        go.Bar(name = '# Recognized New Members', x = recruitment['Staff Name'],y = recruitment['# Recognized New Members'],marker_color='#5652B1'),
+                        go.Bar(name = '# Recognized Return Members', x = recruitment['Staff Name'],y = recruitment['# Recognized Return Members'],marker_color='#5DD8E7')
                         ]
                     )
 
@@ -136,14 +135,19 @@ def app():
     ##################################################################
     portfolio = df.loc[0:2,['Date','Branch Name','Staff Name','$ Portfolio Outstanding']]
 
-    fig4 = go.Figure(data=[go.Pie(labels=portfolio['Staff Name'], values=portfolio['$ Portfolio Outstanding'])])
+    fig4 = go.Figure(data=[go.Pie(labels=portfolio['Staff Name'], 
+                                values=portfolio['$ Portfolio Outstanding'],
+                                marker=dict(colors=['#73439B','#9E9CDD','#7193DC']))])
 
     fig4.update_layout(template="ggplot2",plot_bgcolor='white',
         width=704,height=630,
         title="$ Portfolio Outstanding"
     )
 
-    fig4.update_traces(hoverinfo='label+value+percent', textinfo='value',texttemplate = "%{label} <br>%{value:$,s} <br>(%{percent})", textfont_size=20)
+    fig4.update_traces(hoverinfo='label+value+percent', 
+                        textinfo='value',
+                        texttemplate = "%{label} <br>%{value:$,s} <br>(%{percent})", 
+                        textfont_size=20)
 
     ##################################################################
     # Grand total

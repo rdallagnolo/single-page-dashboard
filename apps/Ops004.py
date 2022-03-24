@@ -10,8 +10,8 @@ def app():
     st.markdown("<h2 style='text-align: center; color: #55D0CE '>Center Discipline Report</h2>", unsafe_allow_html=True)
 
     # data
-    group = pd.read_csv("../fake_groups.csv").drop("Unnamed: 0", axis=1)
-    people = pd.read_csv("../fake_people.csv").drop("Unnamed: 0", axis=1)
+    group = pd.read_csv("data/fake_groups.csv").drop("Unnamed: 0", axis=1)
+    people = pd.read_csv("data/fake_people.csv").drop("Unnamed: 0", axis=1)
 
     # callback to set data
     def data_change():

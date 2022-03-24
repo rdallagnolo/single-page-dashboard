@@ -40,7 +40,7 @@ def app():
     fig = go.Figure()
     fig = go.Figure(data=[
         go.Bar(name="Present", x=df["Group"], y=df["attendance_6_mo"],marker_color='#327F5F')
-        , go.Bar(name="Other", x=df["Group"], y=np.subtract(1, df["attendance_6_mo"],marker_color='#3589A7'))
+        , go.Bar(name="Other", x=df["Group"], y=np.subtract(1, df["attendance_6_mo"]),marker_color='#3589A7')
     ])
     fig.update_layout(template="ggplot2",plot_bgcolor='white',
         width=704,height=420,barmode="stack", title="Center attendance, last 6 months")

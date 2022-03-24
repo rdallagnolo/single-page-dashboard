@@ -42,7 +42,8 @@ def app():
         go.Bar(name="Present", x=df["Group"], y=df["attendance_6_mo"])
         , go.Bar(name="Other", x=df["Group"], y=np.subtract(1, df["attendance_6_mo"]))
     ])
-    fig.update_layout(barmode="stack", title="Center attendance, last 6 months")
+    fig.update_layout(template="ggplot2",plot_bgcolor='white',
+        width=704,height=420,barmode="stack", title="Center attendance, last 6 months")
     fig.update_xaxes(title_text="Group")
     fig.update_yaxes(title_text="Attendance")
 

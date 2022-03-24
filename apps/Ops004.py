@@ -31,7 +31,6 @@ def app():
     # header
     components.html(
         f"""
-        <h1 class="main-header text">Discipline Report</h1>
         <h2 class="sub-header text">Center: {center}</h2>
         """
     )

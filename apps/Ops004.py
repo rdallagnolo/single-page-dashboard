@@ -22,27 +22,31 @@ def app():
         time_data = group.loc[(group["Branch"] == branch) & (group["Center"] == center) & (group["Date"] <= date_string)]
 
     # selectors
-    branch = st.selectbox(label="Select a branch:", options=np.unique(group["Branch"]), on_change=data_change)
-    center = st.selectbox(label="Select a center:", options=np.unique(group.loc[(group["Branch"] == branch)]["Center"]), on_change=data_change)
-    selected_date = st.slider(label="Select a date:", min_value=datetime.date(2022, 2, 1), max_value=datetime.date(2022, 2, 28), on_change=data_change)
+    branch = st.sidebar.selectbox(label="Select a branch:", options=np.unique(group["Branch"]), on_change=data_change)
+    center = st.sidebar.selectbox(label="Select a center:", options=np.unique(group.loc[(group["Branch"] == branch)]["Center"]), on_change=data_change)
+    selected_date = st.sidebar.slider(label="Select a date:", min_value=datetime.date(2022, 2, 1), max_value=datetime.date(2022, 2, 28), on_change=data_change)
 
     # initialize data based on default selections
     data_change()
 
     # header
-    components.html(
-        f"""
-        <h1 class="main-header text">Discipline Report</h1>
-        <h2 class="sub-header text">Center: {center}</h2>
-        """
-    )
+    #components.html(
+    #    f"""
+    #    <h2 color: #55D0CE; class="sub-header text">Center: {center}</h2>
+    #    """
+    #)
+
+    st.markdown(f"""<h2 style='text-align: center; color: #55D0CE '>Center: {center}</h2>""", unsafe_allow_html=True)
 
     # attendance graph
     fig = go.Figure(data=[
-        go.Bar(name="Present", x=df["Group"], y=df["attendance_6_mo"])
-        , go.Bar(name="Other", x=df["Group"], y=np.subtract(1, df["attendance_6_mo"]))
+        go.Bar(name="Present", x=df["Group"], y=df["attendance_6_mo"],marker_color='#327F5F')
+        , go.Bar(name="Other", x=df["Group"], y=np.subtract(1, df["attendance_6_mo"]),marker_color='#3589A7')
     ])
-    fig.update_layout(barmode="stack", title="Center attendance, last 6 months")
+    fig.update_layout(template="ggplot2",plot_bgcolor='white',
+                        width=704,height=420,
+                        barmode="stack", 
+                        title="Center attendance, last 6 months")
     fig.update_xaxes(title_text="Group")
     fig.update_yaxes(title_text="Attendance")
 
@@ -50,12 +54,14 @@ def app():
     st.plotly_chart(fig)
 
     # group status section
-    components.html(
-        """
-        <h2 class="sub-header text">Group and Center Completion</h2>
-        """
-    )
+    #components.html(
+    #    """
+    #    <h2 class="sub-header text">Group and Center Completion</h2>
+    #    """
+    #)
 
+    st.markdown("<h2 style='text-align: center; color: #55D0CE '>Group and Center Completion</h2>", unsafe_allow_html=True)
+    
     # group selector
     selected_group = st.selectbox(label="Select a group:", options=np.unique(df["Group"]))
     group_index = df.loc[(df["Group"] == selected_group)].index.values[0]
@@ -74,9 +80,11 @@ def app():
     time_data_group = time_data.loc[(time_data["Group"] == selected_group)]
 
     fig_2 = go.Figure(data=[
-        go.Scatter(x=time_data_group["Date"], y=time_data_group["repayment_$"], name='Repayment, $')
+        go.Scatter(x=time_data_group["Date"], y=time_data_group["repayment_$"], name='Repayment, $',marker_color='#5DD8E7')
     ])
-    fig_2.update_layout(title=f"Repayments, 2022/02, {selected_group}")
+    fig_2.update_layout(template="ggplot2",
+                        width=704,height=420,
+                        title=f"Repayments, 2022/02, {selected_group}")
     fig_2.update_xaxes(title_text="Date")
     fig_2.update_yaxes(title_text="Repayment, $")
 

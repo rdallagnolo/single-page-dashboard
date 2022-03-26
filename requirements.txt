@@ -1,5 +1,10 @@
 streamlit
 streamlit-authenticator
+streamlit-aggrid
+pylint
+dash
+scikit-learn
+numpy
 pandas
 plotly
 pillow

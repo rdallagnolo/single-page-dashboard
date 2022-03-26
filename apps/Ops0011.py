@@ -38,32 +38,32 @@ def app():
        df.reset_index(drop=True,inplace=True)
 
        if area == 'New York':
-              df=df.iloc[0:7,:]
+              df2=df.iloc[0:7,:]
               plot_rows = 2
               plot_cols = 3
        elif area == 'Northeast':
-              df=df.iloc[7:14,:]
+              df2=df.iloc[7:14,:]
               plot_rows = 2
               plot_cols = 3
        elif area == 'Central & Southeast':
-              df=df.iloc[14:19,:]
+              df2=df.iloc[14:19,:]
               plot_rows = 2
               plot_cols = 2
        elif area == 'California':
-              df=df.iloc[19:26,:]
+              df2=df.iloc[19:26,:]
               plot_rows = 2
               plot_cols = 3
        elif area == 'Texas':
-              df=df.iloc[26:30,:]
+              df2=df.iloc[26:30,:]
               plot_rows = 1
               plot_cols = 3
        elif area == 'Elevate':
-              df=df.iloc[30:34,:]
+              df2=df.iloc[30:34,:]
               plot_rows = 1
               plot_cols = 3
 
-       df = df.drop('Date',axis=1).set_index('Branch Name').T.reset_index().rename(columns = {'index':'metrics'})
-       branches = list(df.columns[1:-1])
+       df2 = df2.drop('Date',axis=1).set_index('Branch Name').T.reset_index().rename(columns = {'index':'metrics'})
+       branches = list(df2.columns[1:-1])
 
        fig = make_subplots(rows=plot_rows, cols=plot_cols,
                      shared_xaxes=True,
@@ -72,8 +72,8 @@ def app():
        x = 1
        for i in range(1, plot_rows + 1):
               for j in range(1, plot_cols + 1):
-                     fig.add_trace(go.Bar(x=df['metrics'],y=df[df.columns[x]].values,
-                                   name = df.columns[x],
+                     fig.add_trace(go.Bar(x=df2['metrics'],y=df2[df2.columns[x]].values,
+                                   name = df2.columns[x],
                                    ),
                             row=i,
                             col=j)
@@ -91,13 +91,13 @@ def app():
        # Grand Total Metrics
        ##################################################################
        # variables
-       n_of_drops = df.iloc[0:1,-1]
-       n_of_partial = df.iloc[1:2,-1]
-       yesterday_paid_off = df.iloc[2:3,-1]
-       today_disbursed = df.iloc[3:4,-1]
-       n_irreg_borrowers = df.iloc[4:5,-1]
-       virtual_new_borrowers = df.iloc[5:6,-1]
-       returning = df.iloc[6:7,-1]
+       n_of_drops = df2.iloc[0:1,-1]
+       n_of_partial = df2.iloc[1:2,-1]
+       yesterday_paid_off = df2.iloc[2:3,-1]
+       today_disbursed = df2.iloc[3:4,-1]
+       n_irreg_borrowers = df2.iloc[4:5,-1]
+       virtual_new_borrowers = df2.iloc[5:6,-1]
+       returning = df2.iloc[6:7,-1]
        ##################################################################
        ## Ploting the graphs in the dashboard
        ##################################################################
@@ -111,3 +111,5 @@ def app():
        col6.metric(label='virtual new borrowers',value=virtual_new_borrowers)
        col7.metric(label='Returning',value=returning)
        st.plotly_chart(fig)
+       df = df.drop(["Date"],axis=1)
+       st.table(data=df)

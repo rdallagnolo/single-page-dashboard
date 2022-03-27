@@ -13,7 +13,6 @@ import datetime
 from datetime import timedelta, date
 
 import matplotlib.pyplot as plt
-import plotly.graph_objects as go
 
 def app():
     # main header with report name
@@ -32,7 +31,8 @@ def app():
         # initialization
         #st.markdown('<p class="big-font">Daily Email Report to CEO </p>', unsafe_allow_html=True)
         #st.markdown("***")
-
+        
+        #read the data
         df_ops002 = read_data()
         all_branches = df_ops002['Branch'].unique()   #.tolist()
         all_branches = np.insert(all_branches, 0, All_BRANCH_SELECTION)
@@ -143,7 +143,44 @@ def app():
 
         selected_times_rows = df_ops002[(df_ops002['Date'] >= select_start_date) & (df_ops002['Date'] <= select_end_date)]
         
-        # show all the metrics's statistics
+        aggregated_plot(df_ops002, selected_times_rows)
+
+        
+    def show_all_centers_period(df_ops002, option_branch, select_start_date, select_end_date):
+        #print("show_all_centers_period here")
+
+        selected_times_rows = df_ops002[(df_ops002['Branch'] == option_branch)
+                                        & (df_ops002['Date'] >= select_start_date) & (df_ops002['Date'] <= select_end_date)]
+        
+        
+        aggregated_plot(df_ops002, selected_times_rows)
+
+
+        
+    def show_all_groups_period(df_ops002, option_branch, option_center, select_start_date, select_end_date):
+        #print("show_all_groups_period here")
+
+        selected_times_rows = df_ops002[(df_ops002['Branch'] == option_branch)  & (df_ops002['Center'] == option_center)
+                                        & (df_ops002['Date'] >= select_start_date) & (df_ops002['Date'] <= select_end_date)]
+            
+        aggregated_plot(df_ops002, selected_times_rows)
+        
+
+    def show_all_metrics_period(df_ops002, option_branch, option_center, option_group, select_start_date, select_end_date):
+        
+        # option_metric is All, center is not "All" and branch is not "All"
+        #print("show_all_metrics_period here")
+
+        selected_times_rows = df_ops002[(df_ops002['Branch'] == option_branch)  & (df_ops002['Center'] == option_center)
+                                        & (df_ops002['Group'] == option_group) & (df_ops002['Date'] >= select_start_date) & (df_ops002['Date'] <= select_end_date)]
+        
+        
+        aggregated_plot(df_ops002, selected_times_rows)
+
+        
+
+    def aggregated_plot(df_ops002, selected_times_rows):
+    # show all the metrics's statistics
         
         all_metrics = df_ops002.columns[5:].tolist()
         
@@ -158,153 +195,20 @@ def app():
         
         # make two columns as dataframe
         data_tuples = list(zip(all_metrics,list_sum_metrics))
-        data_written = pd.DataFrame(data_tuples, columns=['Metric','Aggregated sum in the selected periods'])
+        data_written = pd.DataFrame(data_tuples, columns=['Metric','Aggregated sum in the selected period'])
 
         #print("data_tuples: ", data_tuples)
         
         
         # Plot
-        col1, col2 = st.columns(2)
-
+        # col1, col2 = st.columns(2)
+        
         fig, ax = plt.subplots()
         ax.bar(range(len(all_metrics)), list_sum_metrics)
         
-        col1.pyplot(fig)    
-        col2.write(data_written)
+        st.pyplot(fig)    
+        st.write(data_written)
         
-        
-    def show_all_centers_period(df_ops002, option_branch, select_start_date, select_end_date):
-        #print("show_all_centers_period here")
-
-        selected_times_rows = df_ops002[(df_ops002['Branch'] == option_branch)
-                                        & (df_ops002['Date'] >= select_start_date) & (df_ops002['Date'] <= select_end_date)]
-        
-        
-        # show all the metrics's statistics
-        all_metrics = df_ops002.columns[5:].tolist()
-        
-        list_sum_metrics = []
-        for i, metric in enumerate(all_metrics):
-            sum_option_metric_value = selected_times_rows[metric].sum()   #.tolist()
-            
-            # print("sum_option_metric_value: ", type(sum_option_metric_value), sum_option_metric_value)
-            
-            list_sum_metrics.append(sum_option_metric_value)
-            
-            html_str = f"""
-            <style>
-            p.a {{
-            font: bold 25px Courier;
-            }}
-            </style>
-            <p class="a">{i+1}: {metric} -- {sum_option_metric_value}</p>
-            """
-        
-            #with st.container():
-            #    st.markdown(html_str, unsafe_allow_html=True)
-        
-        # make two columns as dataframe
-        data_tuples = list(zip(all_metrics,list_sum_metrics))
-        data_written = pd.DataFrame(data_tuples, columns=['Metric','Aggregated sum in the selected periods'])
-
-        #print("data_tuples: ", data_tuples)
-        
-        
-        # Plot
-        col1, col2 = st.columns(2)
-
-        fig, ax = plt.subplots()
-        ax.bar(range(len(all_metrics)), list_sum_metrics)
-        
-        col1.pyplot(fig)    
-        col2.write(data_written)
-
-    def show_all_groups_period(df_ops002, option_branch, option_center, select_start_date, select_end_date):
-        #print("show_all_groups_period here")
-
-        selected_times_rows = df_ops002[(df_ops002['Branch'] == option_branch)  & (df_ops002['Center'] == option_center)
-                                        & (df_ops002['Date'] >= select_start_date) & (df_ops002['Date'] <= select_end_date)]
-        
-        
-        # show all the metrics's statistics
-        
-        all_metrics = df_ops002.columns[5:].tolist()
-        
-        list_sum_metrics = []
-        for i, metric in enumerate(all_metrics):
-            sum_option_metric_value = selected_times_rows[metric].sum()   #.tolist()
-            
-            # print("sum_option_metric_value: ", type(sum_option_metric_value), sum_option_metric_value)
-            
-            list_sum_metrics.append(sum_option_metric_value)
-            
-            html_str = f"""
-            <style>
-            p.a {{
-            font: bold 25px Courier;
-            }}
-            </style>
-            <p class="a">{i+1}: {metric} -- {sum_option_metric_value}</p>
-            """
-        
-            #with st.container():
-            #    st.markdown(html_str, unsafe_allow_html=True)
-        
-        # make two columns as dataframe
-        data_tuples = list(zip(all_metrics,list_sum_metrics))
-        data_written = pd.DataFrame(data_tuples, columns=['Metric','Aggregated sum in the selected periods'])
-
-        #print("data_tuples: ", data_tuples)
-        
-        
-        # Plot
-        col1, col2 = st.columns(2)
-
-        fig, ax = plt.subplots()
-        ax.bar(range(len(all_metrics)), list_sum_metrics)
-        
-        col1.pyplot(fig)    
-        col2.write(data_written)
-        
-    def show_all_metrics_period(df_ops002, option_branch, option_center, option_group, select_start_date, select_end_date):
-        
-        # option_metric is All, center is not "All" and branch is not "All"
-        #print("show_all_metrics_period here")
-
-        selected_times_rows = df_ops002[(df_ops002['Branch'] == option_branch)  & (df_ops002['Center'] == option_center)
-                                        & (df_ops002['Group'] == option_group) & (df_ops002['Date'] >= select_start_date) & (df_ops002['Date'] <= select_end_date)]
-        
-        
-        # show all the metrics's statistics
-        
-        all_metrics = df_ops002.columns[5:].tolist()
-        
-        list_sum_metrics = []
-        for i, metric in enumerate(all_metrics):
-            sum_option_metric_value = selected_times_rows[metric].sum()   #.tolist()
-            
-            # print("sum_option_metric_value: ", type(sum_option_metric_value), sum_option_metric_value)
-            
-            list_sum_metrics.append(sum_option_metric_value)
-
-        # make two columns as dataframe
-        data_tuples = list(zip(all_metrics,list_sum_metrics))
-        data_written = pd.DataFrame(data_tuples, columns=['Metric','Aggregated sum in the selected periods'])
-
-        #print("data_tuples: ", data_tuples)
-        
-        
-        # Plot
-        col1, col2 = st.columns(2)
-
-        fig, ax = plt.subplots()
-        ax.bar(range(len(all_metrics)), list_sum_metrics)
-        
-        col1.pyplot(fig)    
-        col2.write(data_written)
-        
-
-
         
     def show_metrics_statistics(selected_times_rows, option_metric):
         
@@ -315,12 +219,12 @@ def app():
         html_str = f"""
         <style>
         p.a {{
-        font: bold 25px Courier;
+        font: bold 35px Courier;
         }}
         </style>
-        <p class="a">Aggregated {option_metric} in the selected period: {sum_option_metric_value}</p>
+        <p class="a"> Total sum of {option_metric}: {sum_option_metric_value} </p> 
         """
-
+        
         with st.container():
             st.markdown(html_str, unsafe_allow_html=True)
 
@@ -330,33 +234,42 @@ def app():
 
         # show the plot
         with st.container():
-            st.markdown('<p class="mid-font"> Metric Trending by Date </p>', unsafe_allow_html=True)
+            html_str = f"""
+        <style>
+        p.a {{
+        font: bold 20px Courier;
+        }}
+        </style>
+        <p class="a">  &nbsp;&nbsp;&nbsp;&nbsp; {option_metric} Trending against Date</p>
+        """
+            #st.markdown('<p class="mid-font"> {option_metric} Trending by Date </p>', unsafe_allow_html=True)
         
-            st.line_chart(selected_times_rows[option_metric])
+        st.line_chart(selected_times_rows[option_metric])
+        with st.container():
+            st.markdown(html_str, unsafe_allow_html=True)
+    
 
 
-        #st.title('Metric Trending by Date')
+    def set_style():
+        #st.set_page_config(layout="wide")
 
-#    def set_style():
-#    #    st.set_page_config(layout="wide")
-
-#        st.markdown("""
-#        <style>
-#        .big-font {
-#            font-size:50px !important;
-#            color:Red;
-#        }
-#        
-#        .mid-font {
-#            font-size:30px !important;
-#            color:Blue;
-#        }
-#        
-#        </style>
-#        """, unsafe_allow_html=True)
+        st.markdown("""
+        <style>
+        .big-font {
+            font-size:50px !important;
+            color:Red;
+        }
         
-    #    with open('style.css') as f:
-    #        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+        .mid-font {
+            font-size:30px !important;
+            color:Blue;
+        }
+        
+        </style>
+        """, unsafe_allow_html=True)
+        
+        with open('style.css') as f:
+            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
             
             
 
@@ -367,5 +280,6 @@ def app():
         
         df_ops002 = pd.read_csv(data_ops002_path, index_col = None)
         return df_ops002
-        
+
+
     visualize()

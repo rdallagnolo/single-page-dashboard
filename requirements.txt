@@ -10,3 +10,4 @@ pillow
 datetime
 matplotlib
 scikit-learn
+click==8

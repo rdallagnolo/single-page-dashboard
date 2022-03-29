@@ -9,3 +9,4 @@ plotly
 pillow
 datetime
 matplotlib
+scikit-learn
